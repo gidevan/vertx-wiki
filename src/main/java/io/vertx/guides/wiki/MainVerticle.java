@@ -1,24 +1,11 @@
-package io.vertx.starter;
+package io.vertx.guides.wiki;
 
-import com.github.rjeschke.txtmark.Processor;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
-import io.vertx.core.http.HttpServer;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.ext.jdbc.JDBCClient;
-import io.vertx.ext.sql.SQLConnection;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BodyHandler;
-import io.vertx.ext.web.templ.FreeMarkerTemplateEngine;
-
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import io.vertx.guides.wiki.database.WikiDatabaseVerticle;
 
 public class MainVerticle extends AbstractVerticle {
 
@@ -33,7 +20,7 @@ public class MainVerticle extends AbstractVerticle {
 
             Future<String> httpVerticleDeployment = Future.future();
             vertx.deployVerticle(
-                "io.vertx.guides.wiki.HttpServerVerticle",
+                "io.vertx.guides.wiki.http.HttpServerVerticle",
             new DeploymentOptions().setInstances(2),
             httpVerticleDeployment.completer());
 

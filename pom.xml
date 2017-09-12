@@ -11,7 +11,7 @@
 
   <properties>
     <vertx.version>3.4.2</vertx.version>
-    <main.verticle>io.vertx.starter.MainVerticle</main.verticle>
+    <main.verticle>io.vertx.guides.wiki.MainVerticle</main.verticle>
   </properties>
 
   <dependencyManagement>
@@ -69,6 +69,15 @@
           <artifactId>logback-classic</artifactId>
           <version>1.2.3</version>
       </dependency>
+      <dependency>
+          <groupId>io.vertx</groupId>
+          <artifactId>vertx-service-proxy</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>io.vertx</groupId>
+          <artifactId>vertx-codegen</artifactId>
+          <scope>provided</scope>
+      </dependency>
   </dependencies>
 
   <build>
@@ -80,8 +89,18 @@
           <configuration>
             <source>1.8</source>
             <target>1.8</target>
+              <useIncrementalCompilation>false</useIncrementalCompilation>
+
+              <annotationProcessors>
+                  <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+              </annotationProcessors>
+              <generatedSourcesDirectory>${project.basedir}/src/main/generated</generatedSourcesDirectory>
+              <compilerArgs>
+                  <arg>-AoutputDirectory=${project.basedir}/src/main</arg>
+              </compilerArgs>
           </configuration>
         </plugin>
+
       </plugins>
     </pluginManagement>
 
@@ -115,6 +134,18 @@
           </execution>
         </executions>
       </plugin>
+
+        <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>${project.basedir}/src/main/generated</directory>
+                    </fileset>
+                </filesets>
+            </configuration>
+        </plugin>
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
